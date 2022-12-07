@@ -1,0 +1,7 @@
+{
+    "username": "Aaron Aaronson",
+    "inputDevice": "keyboard",
+    "buttonPressedTimeMsec": 500.0,
+    "experimentTimeSeconds": 30,
+    "isLogging": true
+}

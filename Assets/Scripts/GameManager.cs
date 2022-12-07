@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,49 +11,54 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public GameState State;
     public static event Action<GameState> OnGameStateChanged;
-    public static bool pressState=false;
-    //buttonPressedTimeMsec
-    float pressWaitingTime = 10f;
+    public float pressWaitingTime;
+    public static float timeRemaining;
+    InputDevice device;
 
-    //EnabledTime
-    public float timeToRemainEnabled=1f;
-    private float currentWaitTime;
-    private bool checkTime;
+
+
+    void Start()
+    {
+        pressWaitingTime = ConfigReader.experiences[ConfigReader.currentExperienceIndex].buttonPressedTimeMsec / 1000;
+        timeRemaining = ConfigReader.experiences[ConfigReader.currentExperienceIndex].experimentTimeSeconds;
+        device = InputDevice.hand;
+        print("ASdasDASD"+ConfigReader.experiences[ConfigReader.currentExperienceIndex+1].getInputDevice());
+        UpdateGameState(GameState.WaitTime);
+    }
 
     void Awake()
     {
         Instance = this;
-
+        //  print(ConfigReader.experiences.Count +ConfigReader.experiences[0].buttonPressedTimeMsec);
     }
 
-    void Start()
-    {
-        UpdateGameState(GameState.WaitTime);
-    }
+
 
     void Update()
     {
-
-        if (pressState == true)
+        if (timeRemaining > 0)
         {
-            
-            if (checkTime)
-            {
-                currentWaitTime -= Time.deltaTime;
-                if (currentWaitTime < 0)
-                {
-                    UpdateGameState(GameState.WaitTime);
-                    checkTime = false;
-                }
-            }  
+            timeRemaining -= Time.deltaTime;
+            //print(timeRemaining);
+        }
+        else
+            UpdateGameState(GameState.ExperienceDone);
 
-            if (Input.GetKeyDown(KeyCode.Space) && (!ButtonManager.pressed))
+        if (device == InputDevice.keyboard)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Space) && !ButtonManager.pressed)
             {
-                print("ButtonPressed" + ButtonManager.pressed);
+                print("keyboard");
                 ButtonManager.Instance.expButton.onClick.Invoke();
             }
         }
+        else if (device == InputDevice.hand)
+        {
+            print("hand");
 
+            ButtonManager.Instance.expButton.onClick.Invoke();
+        }
     }
 
 
@@ -64,48 +70,44 @@ public class GameManager : MonoBehaviour
             case GameState.WaitTime:
                 HandleWaitingTime();
                 break;
-            case GameState.PressEnabled:
-                HandlePressEnabled();
-                break;
             case GameState.PressTime:
-                Invoke("HandlePressTime",pressWaitingTime);
-                break;
-            case GameState.PressDisabled:
+                Invoke("HandlePressTime", pressWaitingTime);
                 break;
             case GameState.ExperienceDone:
+                HandleExperienceDone();
                 break;
             default:
                 break;
         }
 
         OnGameStateChanged(newState);
-      //  OnGameStateChanged?.Invoke(newState);
+
+    }
+
+    private void HandleExperienceDone()
+    {
+        EditorApplication.isPaused = true;
+        //Application.Quit();
 
     }
 
     private void HandlePressTime()
     {
-        UpdateGameState(GameState.WaitTime);
+        ButtonManager.pressed = false;
+        ButtonManager.Instance.expButton.interactable = enabled;
+        ButtonManager.Instance.expButton.GetComponent<Image>().color = Color.white;
     }
 
-    private void HandlePressEnabled()
-    {
-        pressState = true;
-        currentWaitTime = timeToRemainEnabled;
-        checkTime = true;
-    }
 
     private void HandleWaitingTime()
     {
-        pressState = false;
+
     }
 
-    public enum GameState {  
-    WaitTime, // showText
-   // Pressed,
-    PressEnabled,
-    PressTime,
-    PressDisabled,
-    ExperienceDone
+    public enum GameState
+    {
+        WaitTime,
+        PressTime,
+        ExperienceDone
     }
 }

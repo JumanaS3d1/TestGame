@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class KeyboardInput : MonoBehaviour
 {
-    public bool iskeyboardPressed;
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            iskeyboardPressed = true;
-            print("space key was pressed");
-        }
+   
+    public bool IsKeyboardPressed() {
+        print("fdgdfgdf");
+        return Input.GetKeyDown(KeyCode.Space); 
     }
 }

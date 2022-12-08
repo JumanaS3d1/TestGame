@@ -9,6 +9,10 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 { 
     public Scene scene;
+    string s1 = ProjectConsts.sampleExp;
+    string s2 = ProjectConsts.sample2D;
+    string s3 = ProjectConsts.sample3D;
+
     public static GameManager Instance;
     public GameState State;
     public static event Action<GameState> OnGameStateChanged;
@@ -20,9 +24,16 @@ public class GameManager : MonoBehaviour
     public Vector3 startingPos = new Vector3(0,0,0);
     public GameObject thankYouImage= null;
 
+    public Rigidbody ball = null;
+    public Transform shootPos = null;
+    public float shootingForce = 3000;
+    public GameObject captin = null;
+
     private float pressWaitingTime;
     private string inputDevice;
     private bool isLogging;
+
+
 
     public Logger logger;
 
@@ -68,7 +79,7 @@ public class GameManager : MonoBehaviour
     }
     private void HandleExperienceDone()
     {
-        if (scene.name == "Enhanced Scene")
+        if (scene.name == s2 || scene.name == s3)
         {
             thankYouImage.SetActive(true);
             ButtonManager.Instance.expButton.gameObject.SetActive(false);
@@ -82,7 +93,7 @@ public class GameManager : MonoBehaviour
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
-            if (scene.name == "Enhanced Scene")
+            if (scene.name == s2 || scene.name == s3)
             {
                 gameText.text = timeRemaining.ToString();
             }
@@ -108,13 +119,12 @@ public class GameManager : MonoBehaviour
     }
     private void HandlePressTime()
     {
-        if(scene.name == "Sample Scene") { 
         ButtonManager.pressed = false;
+        if (scene.name == s1) { 
         ButtonManager.Instance.expButton.interactable = enabled;
         ButtonManager.Instance.expButton.GetComponent<Image>().color = Color.white;
             }
-        if (scene.name == "Enhanced Scene") {
-            ButtonManager.pressed = false;
+        if (scene.name == s2) {
             ButtonManager.Instance.expButton.transform.position = startingPos;
             ButtonManager.Instance.expButton.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             ButtonManager.Instance.expButton.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
@@ -155,19 +165,27 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitTime()
     {
         yield return new WaitForSeconds(.1f);
-        if (scene.name == "Sample Scene")
+        if (scene.name == s1)
         {
             ButtonManager.textButton.SetActive(false);
             yield return new WaitForSeconds(Random.Range(.5f, 1.1f));
             ButtonManager.textButton.SetActive(true);
         }
+        if (scene.name == s3)
+        {
+            captin.GetComponent<Animator>().Play("Idle");
+            yield return new WaitForSeconds(Random.Range(.5f, 1.1f));
+            SoundManager.Instance.whistle.Play();
+        }
 
-        if (scene.name == "Enhanced Scene") {
+        if (scene.name == s2) {
             thankYouImage.SetActive(false);
             yield return new WaitForSeconds(Random.Range(.5f, 1.1f));
             GameObject mole = molePrefab;//Instantiate(molePrefab) as GameObject;
             mole.transform.position = Spwnerpoints[Random.Range(0, Spwnerpoints.Length)].transform.position;
         }
+      
+
 
             float frameCountTrigger = Time.frameCount;
         if (isLogging)

@@ -17,7 +17,7 @@ public class Logger : MonoBehaviour
 
     private void createLogFile(string filename)
     {
-        this.writer = new StreamWriter("Assets/Logs/" + filename + ".txt", true);
+        this.writer = new StreamWriter("Assets/06_Logs/" + filename + ".txt", true);
     }
 
     public void log(float frameNumber, string triggetType)

@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public static class Utilities 
+public static class Utilities
 {
 
-    public static TextAsset LoadConfigFile() {
+    public static TextAsset LoadConfigFile()
+    {
         try
         {
             TextAsset configFile = Resources.Load<TextAsset>("Examples/config");

@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class ConfigReader : MonoBehaviour
 {
-
-    private TextAsset configFile;
+    public bool readMyFile=false;
+    public TextAsset configFile;
     public static ExperienceInfo _experience;
 
 
     void Start()
     {
-        configFile = Utilities.LoadConfigFile();
-        _experience = JsonUtility.FromJson<ExperienceInfo>(configFile.text);
+        if (readMyFile)
+        {
+            _experience = JsonUtility.FromJson<ExperienceInfo>(configFile.text);
+        }
+        else
+        {
+            configFile = Utilities.LoadConfigFile();
+            _experience = JsonUtility.FromJson<ExperienceInfo>(configFile.text);
+        }
     }
 
 }

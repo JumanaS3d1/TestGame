@@ -5,7 +5,8 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    public AudioSource smashSound;
+    public AudioSource smashSound = null;
+    public AudioSource whistle = null;
 
     void Awake()
     {

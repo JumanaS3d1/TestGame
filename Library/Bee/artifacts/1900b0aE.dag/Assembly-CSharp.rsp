@@ -360,9 +360,10 @@
 "Assets/02_Scripts/Helpers/InputDevice.cs"
 "Assets/02_Scripts/Helpers/Logger.cs"
 "Assets/02_Scripts/Helpers/Models/ExperienceInfo.cs"
+"Assets/02_Scripts/Helpers/ProjectConsts.cs"
 "Assets/02_Scripts/Helpers/Utitities.cs"
-"Assets/FootballGame/Goaling.cs"
-"Assets/WhackAMoleGame/Scripts/SoundManager.cs"
+"Assets/04_WhackAMoleGame/Scripts/SoundManager.cs"
+"Assets/05_FootballGame/Script/Goal.cs"
 -langversion:9.0
 
 /deterministic

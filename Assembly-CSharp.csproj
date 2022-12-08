@@ -56,7 +56,9 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\05_FootballGame\Script\Goal.cs" />
     <Compile Include="Assets\02_Scripts\Helpers\InputDevice.cs" />
+    <Compile Include="Assets\02_Scripts\Helpers\ProjectConsts.cs" />
     <Compile Include="Assets\02_Scripts\Helpers\Enums.cs" />
     <Compile Include="Assets\02_Scripts\ButtonManager.cs" />
     <Compile Include="Assets\02_Scripts\ConfigReader.cs" />
@@ -66,8 +68,6 @@
     <Compile Include="Assets\02_Scripts\Helpers\Utitities.cs" />
     <Compile Include="Assets\02_Scripts\Helpers\Logger.cs" />
     <Compile Include="Assets\04_WhackAMoleGame\Scripts\SoundManager.cs" />
-    <Compile Include="Assets\02_Scripts\Helpers\ProjectConsts.cs" />
-    <Compile Include="Assets\05_FootballGame\Script\Goal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

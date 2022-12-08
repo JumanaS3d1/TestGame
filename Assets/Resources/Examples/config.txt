@@ -1,7 +1,0 @@
-{
-    "username": "samya Aaronson",
-    "inputDevice": "hand",
-    "buttonPressedTimeMsec": 500.0,
-    "experimentTimeSeconds": 10,
-    "isLogging": true
-}

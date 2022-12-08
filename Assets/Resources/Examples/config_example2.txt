@@ -1,7 +1,0 @@
-{
-    "username": "Betty Bautista",
-    "inputDevice": "hand",
-    "buttonPressedTimeMsec": 250.0,
-    "experimentTimeSeconds": 45,
-    "isLogging": true
-}
